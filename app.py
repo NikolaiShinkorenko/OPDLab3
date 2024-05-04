@@ -18,14 +18,14 @@ def form():
         c = int(request.form.get('c_coef'))
         discriminant = (b*b) - (4*a*c)
         if discriminant < 0:
-            return render_template('index.html', answer="Действительных корней нет")
+            return render_template('index.html', answer="действительных корней нет")
         else:
             if discriminant > 0:
                 x1 = (-b + math.sqrt(discriminant)) / (2*a)
                 x2 = (-b - math.sqrt(discriminant)) / (2*a)
             else:
                 x1 = x2 = -b / (2*a)
-            return render_template('index.html', answer=f'x1 = {x1}, x2 = {x2}')
+            return render_template('index.html', answer=f'x₁ = {x1}, x₂ = {x2}')
 
 
 if __name__ == '__main__':
