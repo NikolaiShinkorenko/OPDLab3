@@ -4,6 +4,14 @@ import math
 app = Flask(__name__)
 
 
+def is_number(string):
+    try:
+        float(string)
+        return True
+    except ValueError:
+        return False
+
+
 @app.route('/')
 @app.route('/index')
 def index():
@@ -13,9 +21,24 @@ def index():
 @app.route('/', methods=['POST', 'GET'])
 def form():
     if request.method == 'POST':
-        a = int(request.form.get('a_coef'))
-        b = int(request.form.get('b_coef'))
-        c = int(request.form.get('c_coef'))
+        a_coef = request.form.get('a_coef')
+        b_coef = request.form.get('b_coef')
+        c_coef = request.form.get('c_coef')
+
+        if a_coef == "" or is_number(a_coef) is False or float(a_coef) == 0:
+            return render_template('index.html', answer="некорректный коэффициент a")
+        else: a = float(a_coef)
+        if is_number(b_coef):
+            if b_coef == "":
+                b = 0
+            else: b = float(b_coef)
+        else: return render_template('index.html', answer="некорректный коэффициент b")
+        if is_number(c_coef):
+            if c_coef == "":
+                c = 0
+            else: c = float(c_coef)
+        else: return render_template('index.html', answer="некорректный коэффициент c")
+
         discriminant = (b*b) - (4*a*c)
         if discriminant < 0:
             return render_template('index.html', answer="действительных корней нет")
